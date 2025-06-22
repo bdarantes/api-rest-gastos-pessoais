@@ -1,5 +1,6 @@
 package com.example.gastos_pessoais.dtos;
 
+import com.example.gastos_pessoais.models.TipoTransacao;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -22,14 +23,17 @@ public class TransacaoDto {
     @PastOrPresent(message = "A data não pode ser futura.")
     private LocalDate data;
 
+    private TipoTransacao tipoTransacao;
+
     public  TransacaoDto() {
 
     }
 
-    public TransacaoDto(String descricao, BigDecimal valor, LocalDate data) {
+    public TransacaoDto(String descricao, BigDecimal valor, LocalDate data, TipoTransacao tipoTransacao) {
         this.descricao = descricao;
         this.valor = valor;
         this.data = data;
+        this.tipoTransacao = tipoTransacao;
     }
 
     public String getDescricao() {
@@ -55,5 +59,12 @@ public class TransacaoDto {
     public void setData(LocalDate data) {
         this.data = data;
     }
+    public TipoTransacao getTipoTransacao() {
+        return tipoTransacao;
+    }
+    public void setTipoTransacao(TipoTransacao tipoTransacao) {
+        this.tipoTransacao = tipoTransacao;
+    }
+
 }
 
