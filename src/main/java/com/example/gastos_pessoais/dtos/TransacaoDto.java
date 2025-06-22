@@ -5,10 +5,13 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.*;
+import org.springframework.stereotype.Component;
+
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+@Component
 public class TransacaoDto {
     @NotBlank(message="A descrição é obrigatória.")
     @Size(max = 255, message ="A descrição deve ter no máximo 255 caracteres.")
