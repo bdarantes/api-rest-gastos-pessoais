@@ -11,7 +11,7 @@ public class Transacao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long usuarioId;
+
     private String descricao;
     private BigDecimal valor;
     private LocalDate data;
@@ -26,9 +26,8 @@ public class Transacao {
 
     }
 
-    public Transacao(Long id, Long usuarioId, String descricao, BigDecimal valor, LocalDate data, TipoTransacao tipoTransacao, Usuario usuario) {
+    public Transacao(Long id,  String descricao, BigDecimal valor, LocalDate data, TipoTransacao tipoTransacao, Usuario usuario) {
         this.id = id;
-        this.usuarioId = usuarioId;
         this.descricao = descricao;
         this.valor = valor;
         this.data = data;
@@ -44,13 +43,7 @@ public class Transacao {
         this.id = id;
     }
 
-    public Long getUsuarioId() {
-        return usuarioId;
-    }
 
-    public void setUsuarioId(Long usuarioId) {
-        this.usuarioId = usuarioId;
-    }
 
     public String getDescricao() {
         return descricao;
