@@ -2,7 +2,9 @@ package com.example.gastos_pessoais.mappers;
 
 import com.example.gastos_pessoais.dtos.UsuarioDto;
 import com.example.gastos_pessoais.models.Usuario;
+import org.springframework.stereotype.Component;
 
+@Component
 public class UsuarioMapper {
 
     public UsuarioDto toDto(Usuario usuario) {

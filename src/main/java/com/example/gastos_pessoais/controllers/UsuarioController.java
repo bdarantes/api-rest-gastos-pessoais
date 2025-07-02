@@ -20,39 +20,58 @@ public class UsuarioController {
         this.usuarioService = usuarioService;
     }
     @PostMapping
-    public ResponseEntity<UsuarioDto> salvar(@RequestBody @Valid UsuarioDto usuarioDto) {
+    public ResponseEntity<UsuarioDto> salvarUsuario(@RequestBody @Valid UsuarioDto usuarioDto) {
         UsuarioDto usuarioSalvo = usuarioService.salvarUsuario(usuarioDto);
-        return  new ResponseEntity<>(usuarioSalvo, HttpStatus.CREATED);
+        return  ResponseEntity.status(HttpStatus.CREATED).body(usuarioSalvo);
     }
 
     @GetMapping
     public  ResponseEntity<List<UsuarioDto>>listarUsuarios() {
         List<UsuarioDto> usuarios = usuarioService.listarUsuarios();
-        return  new ResponseEntity<>(usuarios, HttpStatus.OK);
+        return  ResponseEntity.ok(usuarios);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UsuarioDto>buscarPorId(@PathVariable Long id) {
-        UsuarioDto usuario = usuarioService.buscarPorId(id);
-        return ResponseEntity.ok(usuario);
-    }
-    @PutMapping("/{id}")
-    public ResponseEntity<UsuarioDto>atualizarUsuario(@PathVariable Long id, @RequestBody UsuarioDto usuarioDto) {
-        UsuarioDto usuarioAtualizado = usuarioService.atualizarUsuario(id, usuarioDto);
-        if(usuarioAtualizado !=null) {
-            return  new ResponseEntity<>(usuarioAtualizado, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<?>buscarPorId(@PathVariable Long id) {
+        try {
+           UsuarioDto usuario = usuarioService.buscarPorId(id);
+           return ResponseEntity.ok(usuario);
+        } catch (RuntimeException e) {
+            if(e.getMessage().contains("não encontrado")) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+            }
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao buscar usuário");
         }
+    }
+    
+    @PutMapping("/{id}")
+    public ResponseEntity<?>atualizarUsuario(@PathVariable Long id, @RequestBody @Valid UsuarioDto usuarioDto) {
+        try {
+            UsuarioDto usuarioAtualizado = usuarioService.atualizarUsuario(id, usuarioDto);
+            return ResponseEntity.ok(usuarioAtualizado);
+        } catch (RuntimeException e) {
+            if(e.getMessage().contains("não encontrado")) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+            }
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao atualizar usuario");
+
+        }
+
+
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void>deletar(@PathVariable Long id) {
-        usuarioService.deletar(id);
-        if(usuarioService !=null) {
-            return  ResponseEntity.noContent().build();
+    public ResponseEntity<?>deletar(@PathVariable Long id) {
+        try {
+            usuarioService.deletar(id);
+            return ResponseEntity.noContent().build();
+        } catch (RuntimeException e) {
+            if(e.getMessage().contains("não encontrado")) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+            }
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao deletar usuário");
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
 
 }

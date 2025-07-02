@@ -38,11 +38,12 @@ public class TransacaoService {
     public TransacaoDto atualizarTransacao(Long id, TransacaoDto transacaoDto) {
         Transacao transacao = transacaoRepository.findById(id)
                 .orElseThrow(()->new RuntimeException("Transação não encontrada"));
-        Transacao transacaoAtualizada = new Transacao();
-        transacaoAtualizada.setDescricao(transacaoDto.getDescricao());
-        transacaoAtualizada.setValor(transacaoDto.getValor());
-        transacaoAtualizada.setData(transacaoDto.getData());
-        transacaoAtualizada.setTipoTransacao(transacaoDto.getTipoTransacao());
+        transacao.setDescricao(transacaoDto.getDescricao());
+        transacao.setValor(transacaoDto.getValor());
+        transacao.setData(transacaoDto.getData());
+        transacao.setTipoTransacao(transacaoDto.getTipoTransacao());
+
+        Transacao transacaoAtualizada = transacaoRepository.save(transacao);
         return transacaoMapper.toDto(transacaoAtualizada);
     }
 

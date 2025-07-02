@@ -2,7 +2,9 @@ package com.example.gastos_pessoais.mappers;
 
 import com.example.gastos_pessoais.dtos.TransacaoDto;
 import com.example.gastos_pessoais.models.Transacao;
+import org.springframework.stereotype.Component;
 
+@Component
 public class TransacaoMapper {
 
     public TransacaoDto toDto(Transacao transacao) {
