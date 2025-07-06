@@ -1,8 +1,11 @@
+# --------------------------
+# BACKEND (Java / Spring Boot)
+# --------------------------
+/backend/target/
+/backend/.idea/
+/backend/*.iml
+/backend/.mvn/wrapper/maven-wrapper.jar
 HELP.md
-target/
-.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
 
 ### STS ###
 .apt_generated
@@ -26,11 +29,20 @@ target/
 /nbdist/
 /.nb-gradle/
 build/
-!**/src/main/**/build/
-!**/src/test/**/build/
+
+# --------------------------
+# FRONTEND (Vue.js / Node)
+# --------------------------
+# Ignorar arquivos do Vue.js
+/frontend/vue-project/node_modules/
+/frontend/vue-project/dist/
+/frontend/vue-project/.env
+
 
 ### VS Code ###
 .vscode/
+.vscode/*
+!.vscode/extensions.json
 
 # Logs
 logs
@@ -41,25 +53,13 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
+# Outros
 .DS_Store
-dist
-dist-ssr
-coverage
 *.local
+*.suo
+*.sw?
+*.tsbuildinfo
 
 /cypress/videos/
 /cypress/screenshots/
-
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-
-*.tsbuildinfo
 
