@@ -1,6 +1,7 @@
 package com.example.gastos_pessoais.services;
 
 import com.example.gastos_pessoais.dtos.UsuarioDto;
+import com.example.gastos_pessoais.exceptions.RecursoNaoEncontradoException;
 import com.example.gastos_pessoais.mappers.UsuarioMapper;
 import com.example.gastos_pessoais.models.Usuario;
 import com.example.gastos_pessoais.repositories.UsuarioRepository;
@@ -34,11 +35,11 @@ public class UsuarioService {
     public UsuarioDto buscarPorId(Long id) {
         return usuarioRepository.findById(id)
                 .map(usuarioMapper::toDto)
-                .orElseThrow(()->new RuntimeException("Usuario não encontrado"));
+                .orElseThrow(()->new RecursoNaoEncontradoException("Usuario não encontrado"));
     }
     public UsuarioDto atualizarUsuario(Long id, UsuarioDto usuarioDto) {
         Usuario usuarioExistente = usuarioRepository.findById(id)
-                .orElseThrow(()-> new RuntimeException("Usuario não encontrado"));
+                .orElseThrow(()-> new RecursoNaoEncontradoException("Usuario não encontrado"));
         usuarioExistente.setNome(usuarioDto.getNome());
         Usuario usuarioAtualizado= usuarioRepository.save(usuarioExistente);
         return usuarioMapper.toDto(usuarioAtualizado);
@@ -46,7 +47,7 @@ public class UsuarioService {
 
     public void deletar(Long id) {
         if(!usuarioRepository.existsById(id)) {
-            throw new RuntimeException("Usuario não encontrado");
+            throw new RecursoNaoEncontradoException("Usuario não encontrado");
         }
         usuarioRepository.deleteById(id);
 

@@ -1,6 +1,7 @@
 package com.example.gastos_pessoais.services;
 
 import com.example.gastos_pessoais.dtos.TransacaoDto;
+import com.example.gastos_pessoais.exceptions.RecursoNaoEncontradoException;
 import com.example.gastos_pessoais.mappers.TransacaoMapper;
 import com.example.gastos_pessoais.models.Transacao;
 import com.example.gastos_pessoais.repositories.TransacaoRepository;
@@ -33,11 +34,11 @@ public class TransacaoService {
     public TransacaoDto buscarPorId(Long id) {
         return transacaoRepository.findById(id)
                 .map(transacaoMapper::toDto)
-                .orElseThrow(()->new RuntimeException("Transacao não encontrada"));
+                .orElseThrow(()->new RecursoNaoEncontradoException("Transacao não encontrada"));
     }
     public TransacaoDto atualizarTransacao(Long id, TransacaoDto transacaoDto) {
         Transacao transacao = transacaoRepository.findById(id)
-                .orElseThrow(()->new RuntimeException("Transação não encontrada"));
+                .orElseThrow(()->new RecursoNaoEncontradoException("Transação não encontrada"));
         transacao.setDescricao(transacaoDto.getDescricao());
         transacao.setValor(transacaoDto.getValor());
         transacao.setData(transacaoDto.getData());
@@ -49,7 +50,7 @@ public class TransacaoService {
 
     public void deletar(Long id) {
         if(!transacaoRepository.existsById(id)) {
-            throw new RuntimeException("Transação não encontrada");
+            throw new RecursoNaoEncontradoException("Transação não encontrada");
         }
         transacaoRepository.deleteById(id);
     }

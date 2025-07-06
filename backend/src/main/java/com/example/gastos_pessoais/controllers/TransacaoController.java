@@ -57,16 +57,10 @@ public class TransacaoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?>deletar(@PathVariable Long id) {
-        try {
+    public ResponseEntity<Void>deletar(@PathVariable Long id) {
             transacaoService.deletar(id);
             return ResponseEntity.noContent().build();
-        } catch (RuntimeException e) {
-            if(e.getMessage().contains("não encontrada")) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-            }
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao deletar transação");
-        }
+
     }
 
 

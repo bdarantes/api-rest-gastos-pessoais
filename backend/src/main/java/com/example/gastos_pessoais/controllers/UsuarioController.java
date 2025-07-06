@@ -33,45 +33,23 @@ public class UsuarioController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?>buscarPorId(@PathVariable Long id) {
-        try {
            UsuarioDto usuario = usuarioService.buscarPorId(id);
            return ResponseEntity.ok(usuario);
-        } catch (RuntimeException e) {
-            if(e.getMessage().contains("não encontrado")) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-            }
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao buscar usuário");
-        }
+
     }
     
     @PutMapping("/{id}")
     public ResponseEntity<?>atualizarUsuario(@PathVariable Long id, @RequestBody @Valid UsuarioDto usuarioDto) {
-        try {
             UsuarioDto usuarioAtualizado = usuarioService.atualizarUsuario(id, usuarioDto);
             return ResponseEntity.ok(usuarioAtualizado);
-        } catch (RuntimeException e) {
-            if(e.getMessage().contains("não encontrado")) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-            }
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao atualizar usuario");
-
-        }
-
 
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?>deletar(@PathVariable Long id) {
-        try {
+    public ResponseEntity<Void>deletar(@PathVariable Long id) {
             usuarioService.deletar(id);
             return ResponseEntity.noContent().build();
-        } catch (RuntimeException e) {
-            if(e.getMessage().contains("não encontrado")) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-            }
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao deletar usuário");
-        }
-    }
 
+    }
 
 }
